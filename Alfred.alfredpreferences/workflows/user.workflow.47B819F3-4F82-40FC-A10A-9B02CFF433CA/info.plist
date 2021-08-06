@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.vwap.gohome</string>
+	<key>connections</key>
+	<dict>
+		<key>1DB97299-7E80-449D-9775-830C4DBE03DD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>AB010C30-17E7-4ECF-9127-5D0102A32EDF</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>A2F48AD7-CE38-434F-A38E-6398118FE03A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B997A025-AE47-400D-993B-D63A3DE11986</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B997A025-AE47-400D-993B-D63A3DE11986</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1DB97299-7E80-449D-9775-830C4DBE03DD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>VWAP</string>
+	<key>description</key>
+	<string>Go to the homepage of the current visible website on Chrome, Safari or Brave with a keyboard shortcut</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Go Home, Alfred</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>// JavaScript for Automation (JXA) //
+
+const frontmost_app_name = Application('System Events').applicationProcesses.where({ frontmost: true }).name()[0]
+const frontmost_app = Application(frontmost_app_name)
+
+if (['Google Chrome', 'Google Chrome Canary', 'Chromium', 'Opera', 'Vivaldi', 'Brave Browser'].indexOf(frontmost_app_name) &gt; -1) {
+  var current_tab_url = frontmost_app.windows[0].activeTab.url()
+} else if (['Safari', 'Safari Technology Preview', 'Webkit'].indexOf(frontmost_app_name) &gt; -1) {
+  var current_tab_url = frontmost_app.documents[0].url()
+} else {
+  throw new Error('You need a supported browser as your frontmost app')
+}
+current_tab_url</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>7</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>B997A025-AE47-400D-993B-D63A3DE11986</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>A2F48AD7-CE38-434F-A38E-6398118FE03A</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query=$1
+y=`echo $query | awk -F[/:] '{print $4}'`
+echo https://$y</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>1DB97299-7E80-449D-9775-830C4DBE03DD</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>// JavaScript for Automation (JXA) //
+var args = $.NSProcessInfo.processInfo.arguments
+var new_url=$(args.objectAtIndex(args.count-1)).js
+const frontmost_app_name = Application('System Events').applicationProcesses.where({ frontmost: true }).name()[0]
+const frontmost_app = Application(frontmost_app_name)
+
+if (['Google Chrome', 'Google Chrome Canary', 'Chromium', 'Opera', 'Vivaldi', 'Brave Browser'].indexOf(frontmost_app_name) &gt; -1) {
+	frontmost_app.windows[0].activeTab.url=new_url
+} else if (['Safari', 'Safari Technology Preview', 'Webkit'].indexOf(frontmost_app_name) &gt; -1) {
+	frontmost_app.documents[0].url=new_url
+} else {
+  throw new Error('You need a supported browser as your frontmost app')
+}</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>7</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>AB010C30-17E7-4ECF-9127-5D0102A32EDF</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Do you often get stuck deep inside the rabbit hole (of a website) and come out by either 
+- backspacing the URL a gazillian times to go to the home page 
+- or by clicking the website logo usually on the top left
+
+UGHH! make it a keyboard shortcut with this Alfred workflow!
+
+Browser Support
+- Safari
+- Google Chrome
+- Google Chrome Canary
+- Opera
+- Vivaldi
+- Brave Browser
+
+(does NOT support Firefox, for now, sorry!)</string>
+	<key>uidata</key>
+	<dict>
+		<key>1DB97299-7E80-449D-9775-830C4DBE03DD</key>
+		<dict>
+			<key>note</key>
+			<string>modify the URL, remove everything other than the base domain + make it HTTPS if its not.</string>
+			<key>xpos</key>
+			<integer>450</integer>
+			<key>ypos</key>
+			<integer>145</integer>
+		</dict>
+		<key>A2F48AD7-CE38-434F-A38E-6398118FE03A</key>
+		<dict>
+			<key>xpos</key>
+			<integer>40</integer>
+			<key>ypos</key>
+			<integer>145</integer>
+		</dict>
+		<key>AB010C30-17E7-4ECF-9127-5D0102A32EDF</key>
+		<dict>
+			<key>note</key>
+			<string>Go to the home url.</string>
+			<key>xpos</key>
+			<integer>645</integer>
+			<key>ypos</key>
+			<integer>145</integer>
+		</dict>
+		<key>B997A025-AE47-400D-993B-D63A3DE11986</key>
+		<dict>
+			<key>note</key>
+			<string>get the current URL from the browser in front
+(supports Safari &amp; Chrome based browsers)</string>
+			<key>xpos</key>
+			<integer>240</integer>
+			<key>ypos</key>
+			<integer>145</integer>
+		</dict>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>1.0.2</string>
+	<key>webaddress</key>
+	<string>https://twitter.com/vinayw</string>
+</dict>
+</plist>

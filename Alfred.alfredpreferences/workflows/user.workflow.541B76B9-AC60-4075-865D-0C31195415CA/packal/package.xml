@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>BOFH Excuses</name>
+  <version>1.0</version>
+  <bundle>multigeneris.alfred.workflow.bofhexcuses</bundle>
+  <updated>1424637842</updated>
+  <file>bofhexcuses.alfredworkflow</file>
+</workflow>
