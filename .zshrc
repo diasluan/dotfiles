@@ -9,7 +9,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/diasluan/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -85,7 +85,36 @@ ZSH_DISABLE_COMPFIX="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-nvm brew)
+plugins=(
+    aws
+    brew
+    colored-man-pages
+    common-aliases
+    django
+    git
+    github
+    gitignore
+    iterm2
+    jira
+    node
+    nvm
+    npm
+    osx
+    pip
+    pyenv
+    python
+    rails
+    rbenv
+    ruby
+    thefuck
+    tmux
+    vagrant
+    virtualenv
+    yarn
+    zsh-autosuggestions
+    zsh-completions
+    zsh-interactive-cd
+    )
 
 source $ZSH/oh-my-zsh.sh
 
@@ -123,13 +152,11 @@ alias dj="python manage.py"
 
 source $(dirname $(gem which colorls))/tab_complete.sh
 
-source /Users/diasluan/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH=/Users/diasluan/.toolbox/bin:/Users/diasluan/.nvm/versions/node/v12.16.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH=$HOME/.toolbox/bin:$HOME/.nvm/versions/node/v12.16.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
 
@@ -165,7 +192,13 @@ function up() {
   ls
 }
 
-source /Users/diasluan/Dev/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+function get-git-ssh() {
+    ssh-keygen -t ed25519 -C "lucandidoan@gmail.com"
+    code ~/.ssh/config
+    eval "$(ssh-agent -s)"
+    ssh-add -K ~/.ssh/id_ed25519
+    pbcopy < ~/.ssh/id_ed25519.pub
+}
 
 export PATH=/usr/local/bin/aws_completer:$PATH
 
@@ -182,3 +215,5 @@ export PATH=/usr/local/bin:$PATH
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
